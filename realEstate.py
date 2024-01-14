@@ -1,5 +1,5 @@
 import asyncio
-from demo3_extract_pt2 import demo3
+from RE_detail import detail
 import csv
 import re
 import time
@@ -108,20 +108,14 @@ async def scrape_data():
             link = title.find('a')
             list_1.append(link['href'])
             list_2.append([addrs, bds, ba, price, area])
-            print(bds, ba, area, addrs, link['href'])
-            print(price)
 
         tasks = [get_pg_info(listt) for listt in list_1]
         list_4 = await asyncio.gather(*tasks)
-
-        print(list_4)
-
         list_3 = [s1 + s2 for s1, s2 in zip(list_2, list_4)]
         print(list_3)
         writer.writerows(list_3)
         n += len(titles)
 
-        print(str(n) + ' results')
         if int(p_break) <= n:
             print('Results Exceeded')
             break
@@ -134,10 +128,9 @@ async def scrape_data():
 
         except:
             await page.click('#grid-search-results > div.search-pagination > nav > ul > li:nth-child(10) > a')
-            pass
+
         await asyncio.sleep(5)
         url2 = await page.evaluate("() => window.location.href")
-        print(url1 + "------ " + url2)
         if url1 == url2:
             print('pages exceeded OR same page reload')
             break
@@ -147,7 +140,7 @@ async def scrape_data():
 
 
 async def get_pg_info(link):
-    lst = await demo3(link)
+    lst = await detail(link)
     return lst
 
 

@@ -1,5 +1,4 @@
 import asyncio
-
 from pyppeteer import launch
 from bs4 import BeautifulSoup
 from pyppeteer_stealth import stealth
@@ -8,10 +7,10 @@ path = '/Users/trishika/PycharmProjects/pythonProject'
 
 
 async def main():
-    await demo3(site='www.example.com')
+    await detail(site='www.example.com')
 
 
-async def demo3(site):
+async def detail(site):
     browser = await launch({'headless': True})
     print(site)
     page = await browser.newPage()
